@@ -1,5 +1,7 @@
 import qrcode from "qrcode-terminal";
-import { Client, LocalAuth } from "whatsapp-web.js";
+import { Client, Contact, LocalAuth } from "whatsapp-web.js";
+import { initialState } from "../app/database";
+import { ClientName } from "../app/types";
 
 const client = new Client({
   authStrategy: new LocalAuth(),
@@ -13,19 +15,23 @@ client.on("ready", () => {
   console.log("Client is ready.");
 });
 
-client.on("message", (message) => {
+client.on("message", async (message) => {
   const content = message.body;
+  const contact = await message.getContact();
+  const name = contact.pushname;
 
-  if (
-    content === "Oi." ||
-    content === "oi." ||
-    content === "Oi" ||
-    content === "oi"
-  ) {
-    client.sendMessage(
-      message.from,
-      "Bem-vindo à HidroExpress. Tudo em hidráulica você encontra aqui!!! \n Escolha uma das opções abaixo. \n 1 - EPIS. \n 2 - PINTURA. \n 3 - BANHEIRO. \n 4 - ESGOTO. \n 5 - ÁGUA. \n 6 - CONEXÕES. \n 7 - TORNEIRAS. \n 8 - ELÉTRICA."
+  if (content) {
+    const findList = initialState.find(
+      (message, index) => message[index] === content
     );
+
+    if (findList) {
+      client.sendMessage(
+        message.from,
+        "Bem-vindo à HidroExpress. Tudo em hidráulica você encontra aqui!"
+      );
+      client.sendMessage(message.from, "Qual seu nome?");
+    }
   }
 
   if (
