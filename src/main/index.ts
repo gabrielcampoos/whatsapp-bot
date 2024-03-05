@@ -1,7 +1,7 @@
 import qrcode from "qrcode-terminal";
-import { Client, Contact, LocalAuth } from "whatsapp-web.js";
-import { initialState } from "../app/database";
-import { ClientName } from "../app/types";
+import { Client, LocalAuth } from "whatsapp-web.js";
+import { initialState, responseNumber } from "../app/database";
+import { ItemProperties } from "../app/types";
 
 const client = new Client({
   authStrategy: new LocalAuth(),
@@ -34,19 +34,46 @@ client.on("message", async (message) => {
     }
   }
 
-  if (
-    content === "1" ||
-    content === "2" ||
-    content === "3" ||
-    content === "4" ||
-    content === "5" ||
-    content === "6" ||
-    content === "7" ||
-    content === "8"
-  ) {
+  if (content) {
+    const getName = content;
+
+    if (getName === name) {
+      client.sendMessage(
+        message.from,
+        `É um prazer falar com você ${name}, escolha uma das opções abaixo. \n 1 - \n 2 - \n 3 - \n 4 - \n 5 - \n 6 - \n 7 - \n 8 -`
+      );
+    }
+  }
+
+  if (content) {
+    const findList = responseNumber.find(
+      (number, index) => number[index] === content
+    );
+
+    if (
+      findList === "5" ||
+      findList === "6" ||
+      findList === "7" ||
+      findList === "8"
+    ) {
+      const item: ItemProperties = {
+        item: findList,
+        properties: {
+          firstOption: findList,
+          secondOption: findList,
+        },
+      };
+      client.sendMessage(
+        message.from,
+        `Escolha uma das opções a seguir. \n ${item}`
+      );
+    }
+  }
+
+  if (content) {
     client.sendMessage(
       message.from,
-      "Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos o contato. 😃"
+      `Ok ${name}. Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos a preferência. 😃`
     );
   }
 });
