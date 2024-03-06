@@ -17,12 +17,22 @@ client.on("ready", () => {
 
 client.on("message", async (message) => {
   const content = message.body;
-  const contact = await message.getContact();
-  const name = contact.pushname;
+  let name = (await message.getContact()).pushname;
+  let item: ItemProperties = {
+    item: "",
+    properties: {
+      firstOption: "",
+      secondOption: "",
+    },
+  };
 
   if (content) {
-    const findList = initialState.find(
-      (message, index) => message[index] === content
+    const findList = initialState.find((message) => message === content);
+    const findListFirstNumber = responseNumber.find(
+      (number) => number === content
+    );
+    const findListSecondNumber = responseNumber.find(
+      (number) => number === content
     );
 
     if (findList) {
@@ -31,50 +41,58 @@ client.on("message", async (message) => {
         "Bem-vindo à HidroExpress. Tudo em hidráulica você encontra aqui!"
       );
       client.sendMessage(message.from, "Qual seu nome?");
+      return;
     }
-  }
 
-  if (content) {
-    const getName = content;
-
-    if (getName === name) {
+    if (name.includes(content)) {
       client.sendMessage(
         message.from,
         `É um prazer falar com você ${name}, escolha uma das opções abaixo. \n 1 - \n 2 - \n 3 - \n 4 - \n 5 - \n 6 - \n 7 - \n 8 -`
       );
-    }
-  }
-
-  if (content) {
-    const findList = responseNumber.find(
-      (number, index) => number[index] === content
-    );
-
-    if (
-      findList === "5" ||
-      findList === "6" ||
-      findList === "7" ||
-      findList === "8"
+      return;
+    } else if (
+      findListFirstNumber === "1" ||
+      findListFirstNumber === "2" ||
+      findListFirstNumber === "3" ||
+      findListFirstNumber === "4"
     ) {
-      const item: ItemProperties = {
-        item: findList,
+      client.sendMessage(
+        message.from,
+        `Ok ${name}. Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos a preferência. 😃`
+      );
+      client.on("disconnected", () => {
+        console.log("client is disconnected.");
+      });
+    } else if (
+      findListSecondNumber === "5" ||
+      findListSecondNumber === "6" ||
+      findListSecondNumber === "7" ||
+      findListSecondNumber === "8"
+    ) {
+      item = {
+        item: findListSecondNumber,
         properties: {
-          firstOption: findList,
-          secondOption: findList,
+          firstOption: "9 - ",
+          secondOption: "10 - ",
         },
       };
       client.sendMessage(
         message.from,
-        `Escolha uma das opções a seguir. \n ${item}`
+        `Escolha uma das opções a seguir. \n 9 -  \n 10 - `
       );
+      return;
+    } else if (
+      item.properties.firstOption !== "" &&
+      item.properties.secondOption !== ""
+    ) {
+      client.sendMessage(
+        message.from,
+        `Ok ${name}. Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos a preferência. 😃`
+      );
+      client.on("disconnected", () => {
+        console.log("client is disconnected.");
+      });
     }
-  }
-
-  if (content) {
-    client.sendMessage(
-      message.from,
-      `Ok ${name}. Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos a preferência. 😃`
-    );
   }
 });
 
