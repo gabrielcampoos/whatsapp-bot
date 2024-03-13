@@ -31,10 +31,10 @@ client.on("message", async (message) => {
     "https://t.ctcdn.com.br/DMxRsoFn2EzzWk6WaToT6sIidL8=/i489928.jpeg"
   );
   const audioOne = MessageMedia.fromFilePath(
-    "C:/Projetos/Whatsapp bot/src/app/assets/audioOne.opus"
+    "F:/Projetos/Visual Studio Code/Whatsapp bot/src/app/assets/audioOne.opus"
   );
   const audioTwo = MessageMedia.fromFilePath(
-    "C:/Projetos/Whatsapp bot/src/app/assets/audioTwo.opus"
+    "F:/Projetos/Visual Studio Code/Whatsapp bot/src/app/assets/audioTwo.opus"
   );
 
   let item: ItemProperties = {
@@ -50,16 +50,6 @@ client.on("message", async (message) => {
       message.from,
       `Escolha uma das opções abaixo. \n 1 - EPIS \n 2 - PINTURA \n 3 - BANHEIRO \n 4 - ESGOTO \n 5 - ÁGUA \n 6 - CONEXÕES \n 7 - TORNEIRAS E ACABAMENTOS \n 8 - ELÉTRICA`
     );
-    return;
-  }
-
-  if (name === chat[0]) {
-    client.sendMessage(message.from, audioTwo, {
-      sendAudioAsVoice: true,
-    });
-
-    name = "";
-
     return;
   }
 
@@ -80,7 +70,7 @@ client.on("message", async (message) => {
       return;
     }
 
-    chat.push(content);
+    chat.push(content); // [rose, sim, 1, escolher, 9]
 
     if (content === chat[0]) {
       name = content;
@@ -94,7 +84,22 @@ client.on("message", async (message) => {
       return;
     }
 
-    if (content === chat[1]) {
+    if (name === chat[0]) {
+      client.sendMessage(message.from, audioTwo, {
+        sendAudioAsVoice: true,
+      });
+
+      name = "";
+    }
+
+    if (
+      content === "SIM" ||
+      content === "sim" ||
+      content === "Sim" ||
+      content === "SIM." ||
+      content === "sim." ||
+      content === "Sim."
+    ) {
       client.sendMessage(
         message.from,
         `Escolha uma das opções abaixo. \n 1 - EPIS \n 2 - PINTURA \n 3 - BANHEIRO \n 4 - ESGOTO \n 5 - ÁGUA \n 6 - CONEXÕES \n 7 - TORNEIRAS E ACABAMENTOS \n 8 - ELÉTRICA`
@@ -119,98 +124,99 @@ client.on("message", async (message) => {
       return;
     }
 
-    //   if (
-    //     content !== "CONTINUAR" &&
-    //     content !== "continuar" &&
-    //     content !== "CONTINUAR." &&
-    //     content !== "continuar." &&
-    //     content !== "CONFIRMO" &&
-    //     content !== "CONFIRMO." &&
-    //     content !== "confirmo" &&
-    //     content !== "confirmo."
-    //   ) {
-    //     client.sendMessage(
-    //       message.from,
-    //       "Escolha uma das opções abaixo. \n 9 - EPIS \n 10 - PINTURA \n 11 - BANHEIRO \n 12 - ESGOTO \n 13 - ÁGUA \n 14 - CONEXÕES \n 15 - TORNEIRAS E ACABAMENTOS \n 16 - ELÉTRICA"
-    //     );
+    if (
+      content !== "CONTINUAR" &&
+      content !== chat.find((number) => number === content)
+      // content !== "continuar" &&
+      // content !== "CONTINUAR." &&
+      // content !== "continuar." &&
+      // content !== "CONFIRMO" &&
+      // content !== "CONFIRMO." &&
+      // content !== "confirmo" &&
+      // content !== "confirmo."
+    ) {
+      client.sendMessage(
+        message.from,
+        "Escolha uma das opções abaixo. \n 9 - EPIS \n 10 - PINTURA \n 11 - BANHEIRO \n 12 - ESGOTO \n 13 - ÁGUA \n 14 - CONEXÕES \n 15 - TORNEIRAS E ACABAMENTOS \n 16 - ELÉTRICA"
+      );
 
-    //     if (
-    //       content === "9" ||
-    //       content === "10" ||
-    //       content === "11" ||
-    //       content === "12" ||
-    //       content === "13" ||
-    //       content === "14" ||
-    //       content === "15" ||
-    //       content === "16"
-    //     ) {
-    //       productList.push(...content);
+      return;
+    }
 
-    //       client.sendMessage(
-    //         message.from,
-    //         "Você deseja escolher mais itens? \n ESCOLHER. \n CONTINUAR."
-    //       );
+    if (
+      content === chat.find((number) => number === content)
+      // content === "10" ||
+      // content === "11" ||
+      // content === "12" ||
+      // content === "13" ||
+      // content === "14" ||
+      // content === "15" ||
+      // content === "16"
+    ) {
+      productList.push(...content);
 
-    //       return;
-    //     }
+      client.sendMessage(
+        message.from,
+        "Você deseja escolher mais itens? \n ESCOLHER. \n CONTINUAR."
+      );
 
-    //     return;
-    //   }
+      return;
+    }
 
-    //   if (
-    //     content === "CONTINUAR" ||
-    //     content === "continuar" ||
-    //     content === "CONTINUAR." ||
-    //     content === "continuar."
-    //   ) {
-    //     client.sendMessage(
-    //       message.from,
-    //       `Você confirma a escolha dos itens ${productList}? \n CONFIRMO \n MENU ANTERIOR`
-    //     );
-    //     return;
-    //   }
+    if (
+      content === "CONTINUAR" ||
+      content === "continuar" ||
+      content === "CONTINUAR." ||
+      content === "continuar."
+    ) {
+      client.sendMessage(
+        message.from,
+        `Você confirma a escolha dos itens ${productList}? \n CONFIRMO \n MENU ANTERIOR`
+      );
+      return;
+    }
 
-    //   if (
-    //     content !== "CONFIRMO" &&
-    //     content !== "CONFIRMO." &&
-    //     content !== "confirmo" &&
-    //     content !== "confirmo." &&
-    //     content !== "CONTINUAR" &&
-    //     content !== "continuar" &&
-    //     content !== "CONTINUAR." &&
-    //     content !== "continuar."
-    //   ) {
-    //     content = "ESCOLHER";
+    if (
+      content !== "CONFIRMO" &&
+      content !== "CONFIRMO." &&
+      content !== "confirmo" &&
+      content !== "confirmo." &&
+      content !== "CONTINUAR" &&
+      content !== "continuar" &&
+      content !== "CONTINUAR." &&
+      content !== "continuar."
+    ) {
+      content = "ESCOLHER";
 
-    //     return;
-    //   }
+      return;
+    }
 
-    //   if (
-    //     content === "CONFIRMO" ||
-    //     content === "CONFIRMO." ||
-    //     content === "confirmo" ||
-    //     content === "confirmo."
-    //   ) {
-    //     client.sendMessage(
-    //       message.from,
-    //       `Ok. Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos a preferência. 😃`
-    //     );
+    if (
+      content === "CONFIRMO" ||
+      content === "CONFIRMO." ||
+      content === "confirmo" ||
+      content === "confirmo."
+    ) {
+      client.sendMessage(
+        message.from,
+        `Ok. Em instantes um de nossos vendedores entrará em contato. Aguarde um momento, agradecemos a preferência. 😃`
+      );
 
-    //     client.sendMessage(
-    //       message.from,
-    //       "Agora que confirmamos seu pedido, que tal nos seguir nas redes sociais para ficar por dentro de todas as novidades? 😎"
-    //     );
-    //     client.sendMessage(message.from, imageInsta, {
-    //       caption: "instagram.com/hidro_express_ofc/",
-    //       linkPreview: true,
-    //     });
+      client.sendMessage(
+        message.from,
+        "Agora que confirmamos seu pedido, que tal nos seguir nas redes sociais para ficar por dentro de todas as novidades? 😎"
+      );
+      client.sendMessage(message.from, imageInsta, {
+        caption: "instagram.com/hidro_express_ofc/",
+        linkPreview: true,
+      });
 
-    //     client.sendMessage(message.from, imageFace, {
-    //       caption: "facebook.com/profile.php?id=61557179093866&locale=pt_BR",
-    //       linkPreview: true,
-    //     });
-    //     return;
-    //   }
+      client.sendMessage(message.from, imageFace, {
+        caption: "facebook.com/profile.php?id=61557179093866&locale=pt_BR",
+        linkPreview: true,
+      });
+      return;
+    }
 
     //   if (findListSecondNumber === "5") {
     //     client.sendMessage(
