@@ -26,3 +26,16 @@ export const initialState = [
 export const responseNumber = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 export const responseSecondNumber = ["1", "2"];
+
+export const responseNumberLevelTwo = [
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+];
+
+export const responseNumberLevelThree = ["17", "18"];
