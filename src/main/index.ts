@@ -9,12 +9,30 @@ import {
 import { ItemProperties } from "../app/types";
 
 const client = new Client({
+  authStrategy: new LocalAuth({
+    dataPath: "sessions",
+  }),
   webVersionCache: {
-    remotePath:
-      "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2402.5-beta.html",
     type: "remote",
+    remotePath:
+      "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html",
+  },
+  puppeteer: {
+    executablePath: process.env.CHROME_BIN || undefined,
+    // @ts-ignore
+    browserWSEndpoint: process.env.CHROME_WS || undefined,
+    //args: args.split(' ')
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   },
 });
+
+// const client = new Client({
+//   webVersionCache: {
+//     type: "remote",
+//     remotePath:
+//       "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html",
+//   },
+// });
 
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
