@@ -1,5 +1,5 @@
 import qrcode from "qrcode-terminal";
-import { Buttons, Client, LocalAuth, MessageMedia } from "whatsapp-web.js";
+import { Client, LocalAuth, MessageMedia } from "whatsapp-web.js";
 import {
   initialState,
   responseNumber,
@@ -9,7 +9,11 @@ import {
 import { ItemProperties } from "../app/types";
 
 const client = new Client({
-  authStrategy: new LocalAuth(),
+  webVersionCache: {
+    remotePath:
+      "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2402.5-beta.html",
+    type: "remote",
+  },
 });
 
 client.on("qr", (qr) => {
@@ -27,9 +31,6 @@ let name: string = "";
 
 client.on("message", async (message) => {
   let content = message.body;
-  const buttons_reply: Buttons = new Buttons("Oi", [
-    { body: "saber", id: "id" },
-  ]);
 
   const imageInsta = await MessageMedia.fromUrl(
     "https://t.ctcdn.com.br/LrNYRQUo_DAMq8J82V2aFBNLvng=/1280x720/smart/i558851.jpeg"
@@ -56,7 +57,7 @@ client.on("message", async (message) => {
   if (message.type == "ptt") {
     client.sendMessage(
       message.from,
-      `Escolha uma das opções abaixo. \n 1 - EPIS \n 2 - PINTURA \n 3 - BANHEIRO \n 4 - ESGOTO \n 5 - ÁGUA \n 6 - CONEXÕES \n 7 - TORNEIRAS E ACABAMENTOS \n 8 - ELÉTRICA`
+      `Escolha uma das opções abaixo. \n  - EPIS \n 2 - PINTURA \n 3 - BANHEIRO \n 4 - ESGOTO \n 5 - ÁGUA \n 6 - CONEXÕES \n 7 - TORNEIRAS E ACABAMENTOS \n 8 - ELÉTRICA`
     );
     return;
   }
