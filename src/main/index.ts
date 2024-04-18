@@ -180,7 +180,7 @@ client.on("message", async (message) => {
 
       client.sendMessage(
         message.from,
-        "Você deseja escolher mais itens? \n ESCOLHER. \n CONTINUAR."
+        "Você deseja escolher mais itens? \n E - ESCOLHER. \n C - CONTINUAR."
       );
 
       return;
@@ -244,19 +244,17 @@ client.on("message", async (message) => {
 
       client.sendMessage(
         message.from,
-        "Você deseja escolher mais itens? \n ESCOLHER. \n CONTINUAR."
+        "Você deseja escolher mais itens? \n E - ESCOLHER. \n C - CONTINUAR."
       );
 
       return;
     }
 
     if (
-      content === "ESCOLHER" ||
-      content === "escolher" ||
-      content === "ESCOLHER." ||
-      content === "escolher." ||
-      content === "Escolher" ||
-      content === "Escolher."
+      content === "E" ||
+      content === "e" ||
+      content === "E." ||
+      content === "e."
     ) {
       client.sendMessage(
         message.from,
@@ -276,7 +274,7 @@ client.on("message", async (message) => {
 
       client.sendMessage(
         message.from,
-        "Você deseja escolher mais itens? \n ESCOLHER. \n CONTINUAR."
+        "Você deseja escolher mais itens? \n E - ESCOLHER. \n C - CONTINUAR."
       );
 
       return;
@@ -338,33 +336,27 @@ client.on("message", async (message) => {
     }
 
     if (
-      content === "CONTINUAR" ||
-      content === "continuar" ||
-      content === "CONTINUAR." ||
-      content === "continuar." ||
-      content === "Continuar." ||
-      content === "Continuar"
+      content === "C" ||
+      content === "c" ||
+      content === "C." ||
+      content === "c."
     ) {
       client.sendMessage(
         message.from,
-        `Você confirma a escolha dos itens ${productList}? \n CONFIRMO \n MENU ANTERIOR`
+        `Você confirma a escolha dos itens ${productList}? \n S - Sim \n MENU ANTERIOR`
       );
       return;
     }
 
     if (
-      content !== "CONFIRMO" &&
-      content !== "CONFIRMO." &&
-      content !== "confirmo" &&
-      content !== "confirmo." &&
-      content !== "Confirmo." &&
-      content !== "Confirmo" &&
-      content !== "CONTINUAR" &&
-      content !== "continuar" &&
-      content !== "CONTINUAR." &&
-      content !== "continuar." &&
-      content !== "Continuar." &&
-      content !== "Continuar"
+      content !== "S" &&
+      content !== "S." &&
+      content !== "s" &&
+      content !== "s." &&
+      content !== "C" &&
+      content !== "c" &&
+      content !== "C." &&
+      content !== "c."
     ) {
       client.sendMessage(
         message.from,
@@ -377,12 +369,10 @@ client.on("message", async (message) => {
     }
 
     if (
-      content === "CONFIRMO" ||
-      content === "CONFIRMO." ||
-      content === "confirmo" ||
-      content === "confirmo." ||
-      content === "Confirmo." ||
-      content === "Confirmo"
+      content === "S" ||
+      content === "S." ||
+      content === "s" ||
+      content === "s."
     ) {
       client.sendMessage(
         message.from,
